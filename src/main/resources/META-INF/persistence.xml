@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+             xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    <!-- 1.name 属性用于定义持久化单元的名字, 必选
+		 2.transaction-type：指定 JPA  的事务处理策略。
+			RESOURCE_LOCAL：默认值，数据库级别的事务，只能针对一种数据库，不支持分布式事务。
+			如果需要支持分布式事务，使用JTA：transaction-type="JTA“
+	-->
+    <persistence-unit name="jpa" transaction-type="RESOURCE_LOCAL">
+        <!--
+        配置使用什么 ORM 产品来作为 JPA 的实现
+        1. 实际上配置的是  javax.persistence.spi.PersistenceProvider 接口的实现类
+        2. 若 JPA 项目中只有一个 JPA 的实现产品, 则也可以不配置该节点.
+        -->
+        <!--<provider>org.hibernate.ejb.HibernatePersistence</provider>-->
+
+        <!--
+		配置二级缓存的策略
+		ALL：所有的实体类都被缓存
+		NONE：所有的实体类都不被缓存.
+		ENABLE_SELECTIVE：标识 @Cacheable(true) 注解的实体类将被缓存
+		DISABLE_SELECTIVE：缓存除标识 @Cacheable(false) 以外的所有实体类
+		UNSPECIFIED：默认值，JPA 产品默认值将被使用
+		-->
+        <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+
+        <properties>
+            <!-- 连接数据库的基本信息 -->
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql:///jpa"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value="rootroot"/>
+
+            <!-- 配置 JPA 实现产品的基本属性. 配置 hibernate 的基本属性 -->
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <!--hibernate.hbm2ddl.auto：这里可以定义持久层框架要如何更新数据库表结构。
+            前面已经说了，实现了JPA规范的持久层框架是面向对象的，所以不应该手动创建表或者更新表，而应该交由持久层框架实现。
+            该配置项有以下几个可配置值：
+            create-drop：每次加载实体操作工厂（hibernate是SessionFactory、JPA是EntityManagerFactory）时根据model类生成表，
+                        但是实体操作工厂一关闭,表就自动删除；
+            update：第一次加载实体操作工厂时根据model类会自动建立起表的结构（前提是先建立好数据库），以后加载实体操作工厂时根据model类自动更新表结构，
+                    即使表结构改变了但表中的行仍然存在不会删除以前的行。当部署到服务器后，表结构是不会被马上建立起来的，是要等应用第一次运行起来后才会；
+            validate：每次加载实体操作工厂时，验证创建数据库表结构，只会和数据库中的表进行比较，不会创建新表，但是会插入新值。-->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+
+            <!-- 二级缓存相关 -->
+            <property name="hibernate.cache.use_second_level_cache" value="true"/>
+            <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory"/>
+            <property name="hibernate.cache.use_query_cache" value="true"/>
+        </properties>
+
+    </persistence-unit>
+</persistence>
