@@ -1,4 +1,6 @@
-package club.haominglfs.entity;
+package club.haominglfs.entity.one2many;
+
+import club.haominglfs.entity.one2many.Customer;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

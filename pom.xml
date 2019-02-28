@@ -21,6 +21,13 @@
             <version>${project.hibernate.version}</version>
         </dependency>
 
+        <!--开启二级缓存-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>${project.hibernate.version}</version>
+        </dependency>
+
         <!-- jdbc driver -->
         <dependency>
             <groupId>mysql</groupId>

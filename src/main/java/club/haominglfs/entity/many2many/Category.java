@@ -1,4 +1,4 @@
-package club.haominglfs.entity;
+package club.haominglfs.entity.many2many;
 
 import javax.persistence.*;
 import java.util.HashSet;

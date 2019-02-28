@@ -1,4 +1,4 @@
-package club.haominglfs.entity;
+package club.haominglfs.entity.one2many;
 
 import java.util.Date;
 import java.util.HashSet;

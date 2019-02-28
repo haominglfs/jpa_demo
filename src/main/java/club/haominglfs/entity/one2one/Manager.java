@@ -1,4 +1,6 @@
-package club.haominglfs.entity;
+package club.haominglfs.entity.one2one;
+
+import club.haominglfs.entity.one2one.Department;
 
 import javax.persistence.*;
 
